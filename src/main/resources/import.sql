@@ -1,0 +1,5 @@
+ insert into fabricante values (1, 'Apple Inc.', 'BR')
+ insert into fabricante values (2, 'Samsung Inc.', 'BR')
+ insert into modelo values (1, 'AppleCar')
+ insert into modelo values (2, 'SamsungTank')
+ insert into carro values (1, 'PARTICULAR', 'AAAAA12', 'COMBUSTAO', 1, 1)

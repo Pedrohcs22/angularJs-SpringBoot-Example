@@ -1,0 +1,33 @@
+<meta charset=utf-8>
+<div ng-app="consulta" >
+	<div id="vazio" ng-hide="consultaCtrl.hasCarros" class="alert alert-info" role="alert">Nenhum
+		carro cadastrado.</div>
+	<table id="tabela" class="table table-striped" ng-show="consultaCtrl.hasCarros">
+		<thead>
+			<tr>
+				<th>Placa</th>
+				<th>Modelo</th>
+				<th>Tração</th>
+				<th>Categoria</th>
+				<th>Fabricante</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody ng-repeat="car in consultaCtrl.carros" id="carros">
+			<tr>
+				<td>{{car.placa}}</td>
+				<td>{{car.modelo.descricao}}</td>
+				<td>{{car.tracao | normalizar }}</td>
+				<td>{{car.categoria | normalizar}}</td>
+				<td>{{car.fabricanteFormatado}}</td>
+				<td class="text-right">
+					<div class="btn-group btn-group-sm">
+						<button class="btn btn-dark">Alterar</button>
+						 <button ng-click="consultaCtrl.deletarCarro(car.id)"
+							class="btn btn-danger">Excluir</button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
