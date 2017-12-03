@@ -1,21 +1,24 @@
-indexModule.config(function($stateProvider, $urlRouterProvider) {
+angular.module('app').config(function($stateProvider, $urlRouterProvider) {
 	 	$urlRouterProvider.otherwise("/home")
 	 
 		var consultaState = {
 			name : 'consulta',
 			url : '/carros',
-	        templateUrl : "templates/view/consulta.html",
-	        controller: "consultaCarroCtrl",
-	        controllerAs : "consultaCtrl"
+	        templateUrl : "templates/view/consulta.html"
 		}
 
-		var cadastroState = {
+		var cadastroVarState = {
+			name : 'cadastraCarroVar',
+			url : '/carro/{carroId}',
+	        templateUrl : "templates/view/cadastro.html"
+		}
+	 	
+	 	var cadastroNoVarState = {
 			name : 'cadastraCarro',
 			url : '/carro',
-	        templateUrl : "templates/view/cadastro.html",
-	        controller: "cadastraCarroCtrl",
-	        controllerAs : "cadastraCtrl"
+	        templateUrl : "templates/view/cadastro.html"
 		}
+	 	
 		var mainState = {
 			name : 'home',
 			url : '/home',
@@ -23,6 +26,7 @@ indexModule.config(function($stateProvider, $urlRouterProvider) {
 		}
 
 		$stateProvider.state(consultaState);
-		$stateProvider.state(cadastroState);
+		$stateProvider.state(cadastroVarState);
+		$stateProvider.state(cadastroNoVarState);
 		$stateProvider.state(mainState);
 });

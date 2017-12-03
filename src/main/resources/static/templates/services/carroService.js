@@ -1,4 +1,4 @@
-indexModule.service('CarroCRUDService', ['Restangular', function(Restangular) {
+angular.module('app').service('CarroCRUDService', ['Restangular', function(Restangular) {
 	var carrosRest = Restangular.all('carros');
 	var carroAlterado = null;
 	var savedData = {};
@@ -8,7 +8,11 @@ indexModule.service('CarroCRUDService', ['Restangular', function(Restangular) {
 	}
 	
 	this.deletarCarro = function (idCarro) {
-		Restangular.one('carros', idCarro).remove();
+		return Restangular.one('carros', idCarro).remove();
+	}
+	
+	this.recuperarCarro = function (idCarro) {
+		return Restangular.one('carros', idCarro).get();
 	}
 	
 	this.setCarroParaAlteracao = function (data) {
@@ -20,7 +24,7 @@ indexModule.service('CarroCRUDService', ['Restangular', function(Restangular) {
 	}
 	
 	this.salvarCarro = function (carro) {
-		carrosRest.post(carro);
+		return carrosRest.post(carro);
 	}
 	
 } ]);

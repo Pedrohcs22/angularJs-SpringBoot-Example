@@ -1,21 +1,39 @@
-indexModule.controller('cadastraCarroCtrl', [ '$scope', 'CarroCRUDService', 'EnumsREADService', 'ModeloCRUDService' ,
-	'FabricanteCRUDService', 'ValidationsService', '$location',
+angular.module('app').controller('cadastraCarroCtrl', [ '$scope', 'CarroCRUDService', 'EnumsREADService', 'ModeloCRUDService' ,
+	'FabricanteCRUDService', 'ValidationsService', '$location', '$stateParams' ,
 		function($scope, CarroCRUDService, EnumsREADService, ModeloCRUDService, FabricanteCRUDService,
-				ValidationsService, $location) {
+				ValidationsService, $location, $stateParams) {
 			var carroCtrl = this;
 			var isAlteracao = false;
 		
 			// Default não para mensagem de erro
 			carroCtrl.exibeErro = false;
 			
-			var carroParaAlteracao = CarroCRUDService.getCarroParaAlteracao();
-			if(!$.isEmptyObject(carroParaAlteracao)) {
-				carroCtrl.carro = carroParaAlteracao;
-				isAlteracao = true;
-				carroCtrl.textBotaoSubmit = 'Salvar';
-			} else {
-				carroCtrl.carro = {};
-				carroCtrl.textBotaoSubmit = 'Cadastrar';
+			retrieveById();
+			
+			function retrieveById() {
+				if($stateParams.carroId !== undefined) {
+					carroParaAlteracao = CarroCRUDService.recuperarCarro($stateParams.carroId).then(
+							function success (response) {
+								setCarroParaAlteracao(response.plain());
+							},
+							function failure (response) {
+								console.log('Carro não existe');
+							});
+				}				
+			}
+			
+			carroCtrl.carroParaAlteracao = CarroCRUDService.getCarroParaAlteracao();
+			setCarroParaAlteracao(carroCtrl.carroParaAlteracao);			
+			
+			function setCarroParaAlteracao(carro) {
+				if(!$.isEmptyObject(carro)) {
+					carroCtrl.carro = carro;
+					isAlteracao = true;
+					carroCtrl.textBotaoSubmit = 'Salvar';
+				} else {
+					carroCtrl.carro = {};
+					carroCtrl.textBotaoSubmit = 'Cadastrar';
+				}				
 			}
 			
 			CarroCRUDService.setCarroParaAlteracao({});
@@ -54,16 +72,19 @@ indexModule.controller('cadastraCarroCtrl', [ '$scope', 'CarroCRUDService', 'Enu
 				carroCtrl.modelos.forEach(function(m) {
 					if(m.descricao === carroCtrl.carro.modelo.descricao) {
 						carroCtrl.carro.modelo.id = m.id;
+					} else {
+						carroCtrl.carro.modelo.id = null;
 					}
+					
+					console.log(carroCtrl.carro.modelo.id);
 				});
 			}
 			
 			carroCtrl.validarPlaca = function() {
-				if(carroCtrl.carro.placa != undefined && carroCtrl.carro.placa != '') {
+				if(carroCtrl.carro.placa != undefined && carroCtrl.carro.placa != '') {				
+					// Valida placa repetida
 					var idCarro = carroCtrl.carro.id;
-					console.log(idCarro);
 					if(idCarro === undefined || idCarro === '') {
-						console.log('Validando sem placa');
 						ValidationsService.isPlacaRepetida(carroCtrl.carro.placa).then(function(response) {
 							if(response === false) {
 								carroCtrl.exibeErro = false;
@@ -73,7 +94,6 @@ indexModule.controller('cadastraCarroCtrl', [ '$scope', 'CarroCRUDService', 'Enu
 							}
 						});						
 					} else {
-						console.log('Validando com placa' + idCarro);
 						ValidationsService.isPlacaRepetidaId(carroCtrl.carro.placa, idCarro)
 							.then(function(response) {
 							if(response === false) {
@@ -92,9 +112,8 @@ indexModule.controller('cadastraCarroCtrl', [ '$scope', 'CarroCRUDService', 'Enu
 			// Método de inserção
 			carroCtrl.salvarCarro = function () {
 				carroCtrl.setarModelo();
-				console.log(carroCtrl.carro);
 				CarroCRUDService.salvarCarro(carroCtrl.carro).then(function (response) {
-					$location.path('/consulta');
+					$location.path('/carros');
 				});
 			}
 			

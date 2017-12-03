@@ -1,4 +1,4 @@
-indexModule.directive('inputMaskPlaca', function() {
+angular.module('app').directive('inputMaskPlaca', function() {
 	return {
 	    restrict: 'A',
 		require : "ngModel",

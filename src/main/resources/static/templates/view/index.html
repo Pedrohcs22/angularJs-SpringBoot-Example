@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="index">
+<html ng-app="app">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,22 +9,8 @@
     <script src="/nodeDependencies/node_modules/angular/angular.js"></script>
     <script src="/nodeDependencies/node_modules/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
   </head>
-  <body>"src/main/resources/static/templates/index.html"
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <div class="container">
-        <a href="#!welcome" class="navbar-brand">Módulo 6</a>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a href="#!carros" class="nav-link">Consulta</a>
-            </li>
-            <li class="nav-item">
-              <a href="#!carro" class="nav-link">Cadastro</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  <body>
+    <header></header>
     <br>
     <main class="container">  
         <ui-view></ui-view>
@@ -46,5 +32,8 @@
     <script src="/templates/controllers/consulta.js"></script>
     <script src="/templates/controllers/cadastro.js"></script>
     <script src="/templates/controllers/index.js"></script>
+    <script src="/templates/component/listarCarros/listarCarros.js"></script>
+    <script src="/templates/component/cadastraCarro/cadastraCarro.js"></script>
+    <script src="/templates/component/header/header.js"></script>
   </body>
 </html>

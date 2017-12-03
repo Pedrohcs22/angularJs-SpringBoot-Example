@@ -1,4 +1,4 @@
-indexModule.service('EnumsREADService', ['Restangular', function(Restangular) {
+angular.module('app').service('EnumsREADService', ['Restangular', function(Restangular) {
 
 	this.listarTracoes = function () {
 		return Restangular.all('listarTracoes').getList();

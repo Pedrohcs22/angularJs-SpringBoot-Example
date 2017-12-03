@@ -1,4 +1,4 @@
-indexModule.controller('consultaCarroCtrl', ['$location', '$scope', 'CarroCRUDService',
+angular.module('app').controller('consultaCarroCtrl', ['$location', '$scope', 'CarroCRUDService',
 		function($location, $scope, CarroCRUDService) {
 			var carroCtrl = this;
 			
@@ -13,6 +13,7 @@ indexModule.controller('consultaCarroCtrl', ['$location', '$scope', 'CarroCRUDSe
 					carroCtrl.hasCarros = carroCtrl.carros.length !== 0;
 				});
 			}
+			
 			carroCtrl.atualizarCarros();
 			
 			carroCtrl.hasCarros = carroCtrl.carros.length !== 0;
@@ -37,16 +38,15 @@ indexModule.controller('consultaCarroCtrl', ['$location', '$scope', 'CarroCRUDSe
 			// Método de alteração
 			carroCtrl.alterarCarro = function (carro) {
 				CarroCRUDService.setCarroParaAlteracao(carro);
-				$location.path('/cadastro');
+				$location.path('/carro');
 			}
 
 			// Método de deleção
 			carroCtrl.deletarCarro = function (idCarro) {
-				CarroCRUDService.deletarCarro(idCarro);
-				carroCtrl.atualizarCarros();
+				CarroCRUDService.deletarCarro(idCarro).then(function success() {
+					carroCtrl.atualizarCarros();					
+				});
 			}
 			
 			
 		} ]);
-
-// http://www.baeldung.com/angularjs-crud-with-spring-data-rest

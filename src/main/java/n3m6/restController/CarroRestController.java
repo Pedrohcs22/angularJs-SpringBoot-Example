@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import n3m6.entity.Carro;
+import n3m6.entity.Modelo;
 import n3m6.service.CarroService;
 import n3m6.service.FabricanteService;
 import n3m6.service.ModeloService;
@@ -33,11 +34,14 @@ public class CarroRestController {
 	public ResponseEntity<?> salvarCarro(@RequestBody Carro carro) {
 		
 		if(carro.getFabricante().getId() == null) {
-			fabricanteService.salvar(carro.getFabricante());
+			fabricanteService.salvar(carro.getFabricante());				
 		}
 		
 		if(carro.getModelo().getId() == null) {
-			modeloService.salvar(carro.getModelo());
+			Modelo model = modeloService.getByDescricao(carro.getModelo().getDescricao());
+			if(model == null) {
+				modeloService.salvar(carro.getModelo());				
+			}
 		}
 		
 		carroService.salvar(carro);
@@ -52,7 +56,7 @@ public class CarroRestController {
 	@RequestMapping(method=RequestMethod.DELETE, path="/carros/{id}")
 	public ResponseEntity<?> deletarCarro(@PathVariable("id") Integer idCarro) {
 		carroService.remover(idCarro);
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, path="/carros/{id}")

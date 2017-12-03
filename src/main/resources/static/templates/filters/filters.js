@@ -1,4 +1,4 @@
-indexModule.filter('normalizar', function() {
+angular.module('app').filter('normalizar', function() {
 	return function ( input )
     {
 		var lowerCase = input.toLowerCase();

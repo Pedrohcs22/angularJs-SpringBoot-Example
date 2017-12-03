@@ -1,3 +1,3 @@
-var cadastroModule = angular.module('cadastro', []);
-var consultaModule = angular.module('consulta', []);
-var indexModule = angular.module('index', ['ui.router', 'restangular']);
+angular.module('cadastro', []);
+angular.module('consulta', []);
+angular.module('app', ['ui.router', 'restangular']);
