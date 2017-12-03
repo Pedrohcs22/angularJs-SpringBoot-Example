@@ -39,6 +39,11 @@ public class CarroService {
   }
   
   @Transactional
+  public Integer countByPlacaLikeAndIdNot(String placa, Integer id) {
+	  return repository.countByPlacaLikeAndIdNot(placa, id);
+  }
+  
+  @Transactional
   public Carro getByPlaca(String placa) {
 	  return repository.getByPlaca(placa);
   }

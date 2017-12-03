@@ -1,6 +1,6 @@
-indexModule.service('ModeloCRUDService', [ '$http', function($http) {
+indexModule.service('ModeloCRUDService', ['Restangular', function(Restangular) {
 
 	this.listarModelos = function () {
-		return $http.get('/listarModelos');
+		return Restangular.all('modelos').getList();
 	}
 } ]);

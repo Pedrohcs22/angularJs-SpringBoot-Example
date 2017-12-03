@@ -28,12 +28,19 @@ public @Data class Modelo implements Serializable {
 	@SequenceGenerator(name = "modelo", sequenceName = "modelo_sequence", allocationSize = 1)
 	private Integer id;
 
-	@NotNull
-	@NotBlank
 	private String descricao;
 	
 	public Modelo() {
 		super();
+	}
+	
+	public Modelo(String descricao) {
+		setDescricao(descricao);
+	}
+	
+	public Modelo(Integer id, String descricao) {
+		setId(id);
+		setDescricao(descricao);
 	}
 
 	@Override

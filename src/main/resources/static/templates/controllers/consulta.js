@@ -1,36 +1,51 @@
-indexModule.filter('normalizar', function() {
-	return function ( input )
-    {
-		var lowerCase = input.toLowerCase();
-        return lowerCase.charAt(0).toUpperCase() + lowerCase.slice(1);
-    };
-});
-
-indexModule.controller('consultaCarroCtrl', [ '$scope', 'CarroCRUDService',
-		function($scope, CarroCRUDService) {
+indexModule.controller('consultaCarroCtrl', ['$location', '$scope', 'CarroCRUDService',
+		function($location, $scope, CarroCRUDService) {
 			var carroCtrl = this;
 			
+			carroCtrl.filtro = "";
 			carroCtrl.hasCarros = false;
+			carroCtrl.carros = [];
 			
-			CarroCRUDService.listarCarros().then(function success(response) {
-				carroCtrl.carros = response.data;
-				carroCtrl.hasCarros = carroCtrl.carros.length !== 0;
-			}, function error(response) {
-				console.log('ERRO AO RECUPERAR CARROS : ' + response);
-			});
-			
-			carroCtrl.alterarCarro = function(idCarro) {
-				console.log('alterando' + idCarro);
-			}
-			
-			carroCtrl.deletarCarro = function (idCarro) {
-				CarroCRUDService.deletarCarro(idCarro).then(function success(response) {
-					carroCtrl.carros = response.data;
+			// Lista Carros
+			carroCtrl.atualizarCarros = function () {
+				CarroCRUDService.listarCarros().then(function(carros) {
+					carroCtrl.carros = carros.plain();
 					carroCtrl.hasCarros = carroCtrl.carros.length !== 0;
-				}, function error(response) {
-					console.log('ERRO AO DELETAR CARRO : ' + idCarro);
 				});
 			}
+			carroCtrl.atualizarCarros();
+			
+			carroCtrl.hasCarros = carroCtrl.carros.length !== 0;
+			
+			carroCtrl.filtrarCarros = function () {
+				if(carroCtrl.filtro !== undefined && carroCtrl.filtro !== '') {
+					var newList = carroCtrl.carros.filter(function(car) {
+						return String(car.placa).toLowerCase().includes(carroCtrl.filtro.toLowerCase())
+						|| String(car.modelo.descricao).toLowerCase().includes(carroCtrl.filtro.toLowerCase())
+						|| String(car.tracao).toLowerCase().includes(carroCtrl.filtro.toLowerCase())
+						|| String(car.categoria).toLowerCase().includes(carroCtrl.filtro.toLowerCase())
+						|| String(car.fabricanteFormatado).toLowerCase().includes(carroCtrl.filtro.toLowerCase());
+					});
+					carroCtrl.carros = newList;
+					carroCtrl.hasCarros = carroCtrl.carros.length !== 0;
+				} else {
+					console.log('Listando sem filtro');
+					carroCtrl.atualizarCarros();
+				}
+			}
+			
+			// Método de alteração
+			carroCtrl.alterarCarro = function (carro) {
+				CarroCRUDService.setCarroParaAlteracao(carro);
+				$location.path('/cadastro');
+			}
+
+			// Método de deleção
+			carroCtrl.deletarCarro = function (idCarro) {
+				CarroCRUDService.deletarCarro(idCarro);
+				carroCtrl.atualizarCarros();
+			}
+			
 			
 		} ]);
 

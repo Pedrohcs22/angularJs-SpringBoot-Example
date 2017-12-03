@@ -8,7 +8,11 @@ public interface CarroRepository extends JpaRepository<Carro, Integer> {
 	
 	public Integer countByPlacaLike(String placa);
 	
+	public Integer countByPlacaLikeAndIdNot(String placa, Integer id);
+	
 	public long count();
 	
 	public Carro getByPlaca(String placa);
+	
+	
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import n3m6.entity.Modelo;
@@ -17,13 +18,13 @@ public class ModeloRestController {
 	@Autowired
 	private ModeloService modeloService;
 	
-	@RequestMapping("/salvarModelo")
+	@RequestMapping(method=RequestMethod.POST, path="/modelos")
 	public ResponseEntity<?> salvarModelo(@RequestBody Modelo modelo) {
 		modeloService.salvar(modelo);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
-	@RequestMapping("/listarModelos")
+	@RequestMapping(method=RequestMethod.GET, path="/modelos")
 	public ResponseEntity<?> listarCategorias() {
 		return new ResponseEntity(modeloService.listar(), HttpStatus.OK);
 	}

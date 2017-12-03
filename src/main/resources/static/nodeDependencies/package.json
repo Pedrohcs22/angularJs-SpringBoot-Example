@@ -1,7 +1,7 @@
 {
   "name": "n3m7",
   "version": "1.0.0",
-  "description": "módulo de angularJs",
+  "description": "mï¿½dulo de angularJs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,10 +9,14 @@
   "author": "pedro.silva",
   "license": "ISC",
   "dependencies": {
+    "@uirouter/angularjs": "^1.0.11",
     "angular": "^1.6.6",
     "angular-route": "^1.6.6",
     "bootstrap": "^4.0.0-beta.2",
     "jquery": "^3.2.1",
-    "popper.js": "^1.12.7"
+    "jquery-mask-plugin": "^1.14.12",
+    "lodash": "^4.17.4",
+    "popper.js": "^1.12.7",
+    "restangular": "^1.6.1"
   }
 }

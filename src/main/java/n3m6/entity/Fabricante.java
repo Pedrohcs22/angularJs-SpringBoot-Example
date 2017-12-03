@@ -12,8 +12,13 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Entity
+@RequiredArgsConstructor
+@NoArgsConstructor
 public @Data class Fabricante implements Serializable {
 
 	@Id
@@ -22,11 +27,12 @@ public @Data class Fabricante implements Serializable {
 	private Integer id;
 
 	@NotNull
-	@NotBlank
+	@NonNull
 	private String nome;
 
 	@NotNull
-	@NotBlank
+	@NonNull
 	private String pais;
 
+	
 }

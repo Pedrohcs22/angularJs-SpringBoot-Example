@@ -1,10 +1,10 @@
-indexModule.service('EnumsREADService', [ '$http', function($http) {
+indexModule.service('EnumsREADService', ['Restangular', function(Restangular) {
 
 	this.listarTracoes = function () {
-		return $http.get('/listarTracoes');
+		return Restangular.all('listarTracoes').getList();
 	}
 	
 	this.listarCategorias = function () {
-		return $http.get('/listarCategorias');
+		return Restangular.all('listarCategorias').getList();
 	}
 } ]);
